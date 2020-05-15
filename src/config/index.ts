@@ -5,5 +5,6 @@ if (!dotenvFound)
     console.error('No .env file')
 
 export default {
-    port: process.env.PORT || 8080
+    port: process.env.PORT || 8080,
+    databaseURL: process.env.DATABASE_URL || 'mongodb://localhost/test'
 };
