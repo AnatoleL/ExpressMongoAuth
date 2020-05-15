@@ -1,5 +1,9 @@
 import winston from 'winston';
 
+/**
+ * @constructs logger A logger that will log in a file
+ * and on the console depending on how urgent the message is
+ */
 export default winston.createLogger({
     format: winston.format.combine(
         winston.format.colorize(),

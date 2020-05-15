@@ -1,6 +1,8 @@
 import express from 'express';
 import loaders from './loaders';
 import config from './config';
+import logger from './loaders/logger';
+
 
 /**
  * @function startServer Starts the API server
@@ -9,16 +11,16 @@ import config from './config';
  * and then start listening on the config port
  */
 async function startServer() {
-    const app : any = express();
+    const app: any = express();
 
     console.info(`Running loaders`);
     await loaders.init(app);
 
     app.listen(config.port, (err: Error) => {
         if (err)
-            return console.error(err);
+            return logger.error(err);
 
-        console.info(`Listening on PORT ${config.port}`);
+        logger.info(`Listening on PORT ${config.port}`);
     });
 }
 
