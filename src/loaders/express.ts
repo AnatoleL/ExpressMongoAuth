@@ -1,37 +1,54 @@
-import express from 'express';
+import express, { Request, Response, NextFunction } from 'express';
 import bodyParser from 'body-parser';
 import helmet from 'helmet';
-import winston from 'winston';
-import expressWinston from 'express-winston';
+import cors from 'cors';
+import ResponseError from '../types/responseError';
+import routes from '../routes'
 
 /**
  * @function expressLoader Loads every express middleware.
  * @argument express.Application An express application.
  */
 export default async function (app: express.Application): Promise<void> {
-    app.use(bodyParser);
 
-    // security fixing module
-    app.use(helmet);
+  // Transforms raw string of requests into json
+  app.use(bodyParser.json());
 
-    // setting up a logger
-    app.use(expressWinston.logger({
-        transports: [
-            new winston.transports.File({
-                level: 'info',
-                filename: './logs/all-logs.log',
-                handleExceptions: true,
-                maxsize: 5242880, //5MB
-                maxFiles: 5,
-            }),
-            new winston.transports.Console({
-                level: 'debug',
-                handleExceptions: true,
-            })
-        ],
-        format: winston.format.combine(
-            winston.format.colorize(),
-            winston.format.json()
-        )
-    }));
+  // "The magic package that prevents frontend developers going nuts"
+  app.use(cors);
+
+  // security fixing module
+  app.use(helmet);
+  
+  // Load API routes
+  app.use(routes);
+
+  /// catch 404 and forward to error handler
+  app.use((_req, _res, next) => {
+    const err: ResponseError = new Error('Not Found');
+    err.status = 404;
+    next(err);
+  });
+
+  /// error handlers
+  app.use((err: ResponseError, _req: Request, res: Response, next: NextFunction) => {
+    /**
+     * Handle 401 thrown by express-jwt library
+     */
+    if (err.name === 'UnauthorizedError') {
+      return res
+        .status(err.status || 401)
+        .send({ message: err.message })
+        .end();
+    }
+    return next(err);
+  });
+  app.use((err: ResponseError, _req: Request, res: Response, _next: NextFunction) => {
+    res.status(err.status || 500);
+    res.json({
+      errors: {
+        message: err.message,
+      },
+    });
+  });
 }
