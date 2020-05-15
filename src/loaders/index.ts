@@ -1,6 +1,7 @@
 import express from 'express'
 import expressLoader from './express';
 import mongooseLoader from './mongoose';
+import logger from './logger';
 
 /**
  * @function init Sets up the server.
@@ -10,10 +11,10 @@ async function init(app: express.Application): Promise<void> {
 
     // we don't catch any connection issue,as it's necessarily fatal.
     await mongooseLoader()
-        .then(() => console.info('Database connected.'));
+        .then(() => logger.info('Database connected.'));
 
     await expressLoader(app)
-        .then(() => console.info('Express middlewares loaded'));
+        .then(() => logger.info('Express middlewares loaded'));
 }
 
 export default {init}
