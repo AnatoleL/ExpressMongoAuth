@@ -1,13 +1,14 @@
-const bodyParser = require('body-parser');
-const helmet = require('helmet');
-const winston = require('winston');
-const expressWinston = require('express-winston');
+import express from 'express';
+import bodyParser from 'body-parser';
+import helmet from 'helmet';
+import winston from 'winston';
+import expressWinston from 'express-winston';
 
 /**
- * @function load Loads eevery express middleware.
- * @argument app An express application.
+ * @function expressLoader Loads every express middleware.
+ * @argument express.Application An express application.
  */
-async function load(app : any) {
+export default async function (app : express.Application) {
     app.use(bodyParser);
 
     // security fixing module
@@ -38,5 +39,3 @@ async function load(app : any) {
         )
     }));
 }
-
-module.exports = {load};

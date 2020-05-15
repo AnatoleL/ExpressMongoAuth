@@ -1,6 +1,6 @@
-const express = require('express');
-const loaders = require('./loaders');
-const config = require('./config');
+import express from 'express';
+import loaders from './loaders';
+import config from './config';
 
 /**
  * @function startServer Starts the API server
