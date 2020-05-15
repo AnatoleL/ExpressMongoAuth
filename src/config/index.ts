@@ -1,8 +1,10 @@
-import dotenv from 'dotenv'
+import dotenv from 'dotenv';
 
-const dotenvFound = dotenv.config()
-if (!dotenvFound)
-    console.error('No .env file')
+const res = dotenv.config();
+if (res.error) {
+    console.error('Missing .env file.\nExiting...');
+    process.exit(1);
+}
 
 export default {
     port: process.env.PORT || 8080,

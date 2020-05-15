@@ -15,6 +15,7 @@
     "helmet": "3.22.0",
     "mongodb": "3.5.7",
     "mongoose": "5.9.14",
+    "typedi": "0.8.0",
     "typescript": "3.9.2",
     "winston": "3.2.1"
   },
