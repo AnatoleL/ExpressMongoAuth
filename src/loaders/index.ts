@@ -1,4 +1,4 @@
-import express from 'express'
+import express from 'express';
 import expressLoader from './express';
 import mongooseLoader from './mongoose';
 import logger from './logger';
@@ -17,4 +17,4 @@ async function init(app: express.Application): Promise<void> {
         .then(() => logger.info('Express middlewares loaded'));
 }
 
-export default {init}
+export default {init};

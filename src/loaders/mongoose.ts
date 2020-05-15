@@ -6,5 +6,5 @@ import config from '../config';
  */
 export default async function (): Promise<Mongoose> {
     // #TODO retry if connection failed
-    return mongoose.connect(config.databaseURL, { useNewUrlParser: true, useUnifiedTopology: true })
+    return mongoose.connect(config.databaseURL, { useNewUrlParser: true, useUnifiedTopology: true });
 }

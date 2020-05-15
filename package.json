@@ -36,7 +36,7 @@
     "start:prod": "npm run build && node build/main.js",
     "start": "nodemon",
     "test": "mocha",
-    "lint": "eslint src/ --ext ts"
+    "lint": "eslint src/ --ext ts --fix"
   },
   "nodemonConfig": {
     "watch": [

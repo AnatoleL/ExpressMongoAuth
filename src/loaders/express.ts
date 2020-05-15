@@ -8,7 +8,7 @@ import expressWinston from 'express-winston';
  * @function expressLoader Loads every express middleware.
  * @argument express.Application An express application.
  */
-export default async function (app : express.Application) {
+export default async function (app: express.Application): Promise<void> {
     app.use(bodyParser);
 
     // security fixing module
