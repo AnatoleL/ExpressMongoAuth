@@ -10,9 +10,11 @@ import logger from './logger';
 async function init(app: express.Application): Promise<void> {
 
     // we don't catch any connection issue,as it's necessarily fatal.
+    logger.info('Connecting database...');
     await mongooseLoader()
         .then(() => logger.info('Database connected.'));
 
+    logger.info('Loading express middlewares');
     await expressLoader(app)
         .then(() => logger.info('Express middlewares loaded'));
 }
