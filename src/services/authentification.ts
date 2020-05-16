@@ -23,12 +23,12 @@ async function hashPassword(password: string): Promise<string> {
  */
 export async function signup(email: string, password: string): Promise<string> {
 
-    logger.debug(`Trigger signup function with ${email} and ${password}`);
+    logger.debug(`email: ${email}`);
+    logger.debug(`password: ${password}`);
 
     // check if this email address is already taken
-    const exists = UserModel.exists({email});
+    const exists = await UserModel.exists({email});
     if (exists) {
-        logger.silly(`Signup failed: ${email} already taken`);
         throw new UserExistsError(email);
     }
 
@@ -40,7 +40,7 @@ export async function signup(email: string, password: string): Promise<string> {
         });
 
     // Fiou, that worked, now try to insert the created user in the db
-    const userRecord = await UserModel.create(email, hash)
+    const userRecord = await UserModel.create({email, hash})
         .catch((err: Error) => {
             logger.error(`Signup failed: user insertion failed`);
             logger.debug(err);
@@ -49,8 +49,9 @@ export async function signup(email: string, password: string): Promise<string> {
 
     // Alright, one last thing ! We need a token
     const {secret} = config;
-    const token = jwt.sign(userRecord._id, secret);
-  
+    const token = jwt.sign({id:userRecord._id}, secret);
+ 
     // done.
+    logger.info(`Signup succeeded: ${email}`);
     return token;
 }
