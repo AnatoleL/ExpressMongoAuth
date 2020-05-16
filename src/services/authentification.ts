@@ -28,7 +28,7 @@ export async function signup(email: string, password: string): Promise<string> {
     // check if this email address is already taken
     const exists = UserModel.exists({email});
     if (exists) {
-        logger.silly(`Signup failed: ${email} already taken`)
+        logger.silly(`Signup failed: ${email} already taken`);
         throw new UserExistsError(email);
     }
 

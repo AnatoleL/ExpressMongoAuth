@@ -42,7 +42,7 @@ export default async function (app: express.Application): Promise<void> {
     }
     return next(err);
   });
-  app.use((err: ResponseError, _req: Request, res: Response, _next: NextFunction) => {
+  app.use((err: ResponseError, _req: Request, res: Response) => {
     res.status(err.status || 500);
     res.json({
       errors: {
