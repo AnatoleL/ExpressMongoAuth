@@ -2,8 +2,8 @@ import express, { Request, Response, NextFunction } from 'express';
 import bodyParser from 'body-parser';
 import helmet from 'helmet';
 import cors from 'cors';
-import ResponseError from '../types/responseError';
-import routes from '../routes'
+import {ResponseError} from '../types/Errors';
+import routes from '../routes';
 
 /**
  * @function expressLoader Loads every express middleware.
@@ -25,8 +25,7 @@ export default async function (app: express.Application): Promise<void> {
 
   /// catch 404 and forward to error handler
   app.use((_req, _res, next) => {
-    const err: ResponseError = new Error('Not Found');
-    err.status = 404;
+    const err = new ResponseError('Not Found', 404);
     next(err);
   });
 
