@@ -6,12 +6,16 @@
   "dependencies": {
     "@types/mongodb": "3.5.17",
     "@types/mongoose": "5.7.19",
+    "bcrypt": "4.0.1",
     "body-parser": "1.19.0",
+    "celebrate": "12.1.1",
     "cors": "2.8.5",
     "debug": "4.1.1",
     "dotenv": "8.2.0",
     "express": "4.17.1",
     "helmet": "3.22.0",
+    "joi": "14.3.1",
+    "jsonwebtoken": "8.5.1",
     "mongodb": "3.5.7",
     "mongoose": "5.9.14",
     "typedi": "0.8.0",
@@ -19,9 +23,11 @@
     "winston": "3.2.1"
   },
   "devDependencies": {
+    "@types/bcrypt": "3.0.0",
     "@types/cors": "2.8.6",
     "@types/express": "4.17.6",
     "@types/helmet": "0.0.47",
+    "@types/jsonwebtoken": "8.5.0",
     "@types/node": "14.0.1",
     "@typescript-eslint/eslint-plugin": "2.33.0",
     "@typescript-eslint/parser": "2.33.0",
