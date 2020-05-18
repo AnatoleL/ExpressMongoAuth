@@ -17,3 +17,8 @@ you can also run the testsuite
 ```
 npm test
 ```
+
+## TODO
+
+- [ ] Testsuite
+- [ ] Sample routes
