@@ -1,4 +1,4 @@
-import { UserExistsError, InternalServerError } from "../types/Errors";
+import { BadCredentialsError, UserNotFoundError, UserExistsError, InternalServerError } from "../types/Errors";
 import UserModel from '../models/User';
 import bcrypt from 'bcrypt';
 import config from '../config';
@@ -53,5 +53,29 @@ export async function signup(email: string, password: string): Promise<string> {
  
     // done.
     logger.info(`Signup succeeded: ${email}`);
+    return token;
+}
+
+export async function login(email: string, password: string): Promise<string> {
+    logger.debug(`email: ${email}`);
+    logger.debug(`password: ${password}`);
+
+    // Okay, first let's check if this user actually exists...
+    const userRecord = await UserModel.findOne({email});
+    if (!userRecord)
+        throw new UserNotFoundError(email);
+
+    // Did he provide the right password ?
+    const match = await bcrypt.compare(password, userRecord.hash);
+    if (!match)
+        throw new BadCredentialsError(email);
+
+    // Alright, one last thing ! We need a token
+    const {secret} = config;
+    const token = jwt.sign({id:userRecord._id}, secret);
+
+    // done
+    logger.info(`Login succeeded: ${email}`);
+    logger.debug(`Issued token ${token}`);
     return token;
 }
