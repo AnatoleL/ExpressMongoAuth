@@ -5,6 +5,10 @@ import cors from 'cors';
 import {ResponseError} from '../types/Errors';
 import AuthRouter from '../routes';
 import logger from './logger';
+import jwt from 'express-jwt';
+import config from '../config';
+
+const {secret} = config;
 
 /**
  * @function expressLoader Loads every express middleware.
@@ -25,7 +29,10 @@ export default async function (app: express.Application): Promise<void> {
 
   // security fixing module
   app.use(helmet());
-  
+ 
+  // Adds authentification for token bearers
+  app.use(jwt({secret}).unless({path:['/auth/signup', '/auth/login']}));
+
   // Load API routes
   app.use('/auth', AuthRouter);
 
