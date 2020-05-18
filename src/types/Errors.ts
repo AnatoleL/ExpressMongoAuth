@@ -31,3 +31,25 @@ export class InternalServerError extends ResponseError {
         super('Internal server error', 500);
     }
 }
+
+/**
+ * @class Describes a bad credentials error.
+ * @argument email The email that was used.
+ */
+export class BadCredentialsError extends ResponseError {
+    email: string
+    constructor(email: string) {
+        super(`Bad credentials`, 400);
+        this.email = email;
+    }
+}
+
+/**
+ * @class Describes a user not found error.
+ * @argument email The email that was used.
+ */
+export class UserNotFoundError extends ResponseError {
+    constructor(email: string) {
+        super(`User not found: ${email}`, 400);
+    }
+}
