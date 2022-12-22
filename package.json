@@ -13,7 +13,7 @@
     "express-jwt": "5.3.3",
     "helmet": "3.22.0",
     "joi": "14.3.1",
-    "jsonwebtoken": "8.5.1",
+    "jsonwebtoken": "9.0.0",
     "mongodb": "3.5.7",
     "mongoose": "5.9.14",
     "typedi": "0.8.0",
